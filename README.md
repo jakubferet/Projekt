@@ -17,14 +17,14 @@ Cíl: bezpečnostní zařízení s využitím Arduino UNO a modulu ESP8266
   - nastavit automatické spuštění na určitou dobu
   - vypnout nebo zapnout systém na dálku
   - atd.
-3.10.2017
-  - dorazily součástky, začínám stavět
-14.10.2017
-- CO FUNGUJE: 
+- 3.10.2017
+    - dorazily součástky, začínám stavět
+- 14.10.2017
+  - CO FUNGUJE: 
     - hardware je až na modul ESP8266 složený a funkční
     - je možné alarm spouštět i vypínat, displej funguje jak má, chybové hlášky se vypisují jak mají
     - LED i bzučák fungují
-- CO NEFUNGUJE:
+  - CO NEFUNGUJE:
     - není možné vypnout alarm v daném intervalu do jeho spuštění - při zadávání hesla se zastaví odpočet, čímž se alarm v podstatě vypne       ať je heslo zadáno nebo ne - nutné vyřešit
     - stejný problém je při pokusu o přerušení odpočtu do aktivace alarmu
     - ESP8266 jsem ještě nezapojil - není možné komunikovat s PC, nezačal jsem ani psát samotnou aplikaci
