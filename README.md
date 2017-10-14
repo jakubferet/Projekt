@@ -17,9 +17,9 @@ Cíl: bezpečnostní zařízení s využitím Arduino UNO a modulu ESP8266
   - nastavit automatické spuštění na určitou dobu
   - vypnout nebo zapnout systém na dálku
   - atd.
-- 3.10.2017
+3.10.2017
   - dorazily součástky, začínám stavět
-- 14.10.2017
+14.10.2017
 - CO FUNGUJE: 
     - hardware je až na modul ESP8266 složený a funkční
     - je možné alarm spouštět i vypínat, displej funguje jak má, chybové hlášky se vypisují jak mají
