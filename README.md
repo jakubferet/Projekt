@@ -12,7 +12,7 @@ Cíl: bezpečnostní zařízení s využitím Arduino UNO a modulu ESP8266
       - na displeji se objeví možnost zadání hesla pro vypnutí alarmu
         - po zadání správného hesla se vypne bzučák, zhasne LED a je nutné znovu zadat heslo pro opětovnou aktivaci
 - možnost ovládat zařízení přes aplikaci díky modulu 8266
-  - skrátit nebo prodloužit časy
+  - zkrátit nebo prodloužit časy
   - změnit heslo
   - nastavit automatické spuštění na určitou dobu
   - vypnout nebo zapnout systém na dálku
