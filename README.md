@@ -31,5 +31,6 @@ Cíl: bezpečnostní zařízení s využitím Arduino UNO a modulu ESP8266
 - 15.10.2017
   - všechny problémy vyřešeny, zdá se, že vše funguje jak má
   - modul ESP8266 stále nezapojen, nutné vyřešit jeho napájení
+  - nutné zjistit, jak arduino "uspat", když alarm není zapnutý
     
   
