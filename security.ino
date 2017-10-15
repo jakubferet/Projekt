@@ -49,7 +49,7 @@ byte rowPins[ROWS] = {13, 12, 11, 10};
 byte colPins[COLS] = {9, 8, 7, 6};
 Keypad myKeypad = Keypad( makeKeymap(keyMap), rowPins, colPins, ROWS, COLS); 
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE); 
-void setup() { 
+void setup(){ 
   Serial.begin(9600);
   lcd.begin(16,2); 
   pinMode(buzzer, OUTPUT); 
@@ -58,7 +58,7 @@ void setup() {
   pinMode(RedLED, OUTPUT);
 }
 
-void loop() {
+void loop(){
     keypressed = myKeypad.getKey();
     warningMessage = false;
     alarmMessage = false;
@@ -73,7 +73,7 @@ void loop() {
     }
     enterPassword();
        
-    /*if (keypressed == 'A')  {    
+    /*if (keypressed == 'A'){    
       //tone(buzzer, 1000, 200);
       //activateAlarm = true;
       lcd.clear();
@@ -85,7 +85,7 @@ void loop() {
       activateMessage = true;
       back = false;
       enterPassword();
-      if(back == false) {
+      if(back == false){
         activateAlarm(); 
       }                
     }*/
@@ -97,7 +97,7 @@ void loop() {
   //Serial.print(keypressed);
 }
 
-void activateAlarm()  {
+void activateAlarm(){
   activeAlarm = false;
   lcd.clear();
   lcd.setCursor(0,0);
@@ -105,10 +105,10 @@ void activateAlarm()  {
   lcd.setCursor(0,1);
   lcd.print("C - CANCEL");  
   countdown = COUNTDOWN;   
-  while (countdown != 0-1) {
+  while (countdown != 0-1){
     currentMillis = millis();
     keypressed = myKeypad.getKey(); 
-    if(keypressed == 'C') {
+    if(keypressed == 'C'){
       lcd.clear();
       lcd.setCursor(5,0);
       lcd.print("CANCEL");
@@ -122,7 +122,7 @@ void activateAlarm()  {
       enterPassword();
       return;
     }  
-    if (currentMillis - previousMillis >= interval) {               
+    if (currentMillis - previousMillis >= interval){               
       previousMillis = currentMillis;
       lcd.setCursor(12,0);
       lcd.print(countdown);
@@ -133,7 +133,7 @@ void activateAlarm()  {
   alarmCheck();
 }
 
-void alarmCheck() { 
+void alarmCheck(){ 
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("ALARM ACTIVATED!");
@@ -141,13 +141,13 @@ void alarmCheck() {
   initialDistance = getDistance();
   danger = false;
   back = false;
-  while(danger == false) {      
+  while(danger == false){      
     currentDistance = getDistance() + 10;
-    if (currentDistance < initialDistance) {
+    if (currentDistance < initialDistance){
       danger = true;
       warning = WARNING;
       while(warning != 0-1){
-        if(message == 0)  {
+        if(message == 0){
           lcd.clear();
           lcd.setCursor(4,0);
           lcd.print("WARNING");  
@@ -165,11 +165,11 @@ void alarmCheck() {
   }
 }
 
-void alarmActivated() {
+void alarmActivated(){
   warning = WARNING;
   countdown = COUNTDOWN;
   deactivate = false;
-  if(text == 0) {
+  if(text == 0){
     lcd.clear();
     lcd.setCursor(0,0);      
     lcd.print(" *** ALARM *** ");
@@ -201,33 +201,33 @@ long getDistance(){
   return distance;
 }
 
-void ledBlink() {
+void ledBlink(){
   ledCurrent = millis();
-  if (ledCurrent - ledPrevious >= ledInterval) {
+  if (ledCurrent - ledPrevious >= ledInterval){
     ledPrevious = ledCurrent;
-    if (ledState == LOW) {
+    if (ledState == LOW){
       ledState = HIGH;
     } 
-    else {
+    else{
       ledState = LOW;
     }
     digitalWrite(RedLED, ledState);
   }    
 } 
 
-void enterPassword() {
+void enterPassword(){
   int attempt = 3;
   int k=9;
   tempPassword = "";
   activated = true;
   lcd.setCursor(0,1);
   lcd.print("Password:");
-  while(activated) {
-    while(warning != 0-1 || countdown != 0-1)  {
+  while(activated){
+    while(warning != 0-1 || countdown != 0-1){
       keypressed = myKeypad.getKey();
-      if(deactivate == true)  {
+      if(deactivate == true){
         currentMillis = millis();       
-        if (currentMillis - previousMillis >= interval) {           
+        if (currentMillis - previousMillis >= interval){           
           previousMillis = currentMillis;
           if(back == true){
             lcd.setCursor(12,0);
@@ -235,7 +235,7 @@ void enterPassword() {
             tone(buzzer, 700, 100);
             countdown--;  
           }
-          else {
+          else{
             ledBlink();
             lcd.setCursor(13,0);
             lcd.print(warning);
@@ -244,49 +244,49 @@ void enterPassword() {
           }   
         }
       }
-      if (keypressed != NO_KEY) {
+      if (keypressed != NO_KEY){
         if (keypressed == '0' || keypressed == '1' || keypressed == '2' || keypressed == '3' ||
             keypressed == '4' || keypressed == '5' || keypressed == '6' || keypressed == '7' ||
-            keypressed == '8' || keypressed == '9' ) {
+            keypressed == '8' || keypressed == '9' ){
           tempPassword += keypressed;
           lcd.setCursor(k,1);
           lcd.print("*");
           k++;
         }
       }
-      if (k > 13 || keypressed == 'C') {
+      if (k > 13 || keypressed == 'C'){
         k=9;
         tempPassword = "";    
         lcd.clear();
-        if(activateMessage == true) {
+        if(activateMessage == true){
           lcd.setCursor(1,0);
           lcd.print("ACTIVATE ALARM");
         }          
-        else if(warningMessage == true) {
+        else if(warningMessage == true){
           lcd.setCursor(4,0);
           lcd.print("WARNING");
         }
-        else if(alarmMessage == true) {
+        else if(alarmMessage == true){
           lcd.setCursor(0,0);
           lcd.print(" *** ALARM *** ");
         }
-        else if(cancelMessage == true) {
+        else if(cancelMessage == true){
           lcd.setCursor(5,0);
           lcd.print("CANCEL");
         }
         lcd.setCursor(0,1);
         lcd.print("Password:");
       }
-      if (keypressed == '*') {
-        if (tempPassword == password) {
+      if (keypressed == '*'){
+        if (tempPassword == password){
           deactivate = false;
           activated = false;
           message = 0; 
           text = 0;
-          if(activeAlarm == true) {
+          if(activeAlarm == true){
             activateAlarm();        
           }
-          else {    
+          else{    
             noTone(buzzer);
             digitalWrite(RedLED, LOW);    
             lcd.clear();
@@ -297,37 +297,37 @@ void enterPassword() {
             return;
           }
         }
-        else if (tempPassword != password) {        
+        else if (tempPassword != password){        
           k=9;
           tempPassword = "";
           attempt--;
           lcd.clear();
           lcd.setCursor(5,0);
           lcd.print("WRONG!");
-          if(activateMessage == false && alarmMessage == false) {
+          if(activateMessage == false && alarmMessage == false){
             lcd.setCursor(0,1);
-            lcd.print("ATTEMPTS: ");
+            lcd.print("ATTEMPTS:");
             lcd.setCursor(10,1);
             lcd.print(attempt);  
-            if(attempt == 0) {
+            if(attempt == 0){
               alarmActivated();
             }
           }     
           delay(2000);
           lcd.clear();          
-          if(activateMessage == true) {
+          if(activateMessage == true){
             lcd.setCursor(1,0);
             lcd.print("ACTIVATE ALARM");
           }      
-          else if(warningMessage == true) {
+          else if(warningMessage == true){
             lcd.setCursor(4,0);
             lcd.print("WARNING");
           }      
-          else if(alarmMessage == true) {
+          else if(alarmMessage == true){
             lcd.setCursor(0,0);
             lcd.print(" *** ALARM *** ");
           }
-          else if(cancelMessage == true) {
+          else if(cancelMessage == true){
             lcd.setCursor(5,0);
             lcd.print("CANCEL");
           }
@@ -336,15 +336,11 @@ void enterPassword() {
         }
       }    
     }
-    if(back == true) {
+    if(back == true){
       alarmCheck();
     }
-    else {
+    else{
       alarmActivated();
     }    
   }
 }
-
-
-
-
