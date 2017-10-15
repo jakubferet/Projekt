@@ -28,5 +28,8 @@ Cíl: bezpečnostní zařízení s využitím Arduino UNO a modulu ESP8266
     - není možné vypnout alarm v daném intervalu do jeho spuštění - při zadávání hesla se zastaví odpočet, čímž se alarm v podstatě vypne       ať je heslo zadáno nebo ne - nutné vyřešit
     - stejný problém je při pokusu o přerušení odpočtu do aktivace alarmu
     - ESP8266 jsem ještě nezapojil - není možné komunikovat s PC, nezačal jsem ani psát samotnou aplikaci
+- 15.10.2017
+  - všechny problémy vyřešeny, zdá se, že vše funguje jak má
+  - modul ESP8266 stále nezapojen, nutné vyřešit jeho napájení
     
   
