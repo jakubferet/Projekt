@@ -25,12 +25,23 @@ Cíl: bezpečnostní zařízení s využitím Arduino UNO a modulu ESP8266
     - je možné alarm spouštět i vypínat, displej funguje jak má, chybové hlášky se vypisují jak mají
     - LED i bzučák fungují
   - CO NEFUNGUJE:
-    - není možné vypnout alarm v daném intervalu do jeho spuštění - při zadávání hesla se zastaví odpočet, čímž se alarm v podstatě vypne       ať je heslo zadáno nebo ne - nutné vyřešit
+    - není možné vypnout alarm v daném intervalu do jeho spuštění - při zadávání hesla se zastaví odpočet, čímž se alarm v podstatě           vypne ať je heslo zadáno nebo ne - nutné vyřešit
     - stejný problém je při pokusu o přerušení odpočtu do aktivace alarmu
     - ESP8266 jsem ještě nezapojil - není možné komunikovat s PC, nezačal jsem ani psát samotnou aplikaci
 - 15.10.2017
   - všechny problémy vyřešeny, zdá se, že vše funguje jak má
   - modul ESP8266 stále nezapojen, nutné vyřešit jeho napájení
   - nutné zjistit, jak arduino "uspat", když alarm není zapnutý
-    
+- 16.10.2017
+  - modul ESP8266 zprovozněn, funguje, zůstává otázka jeho napájení z baterie, zatím napájen ze sítě - nevyhovující
+- 17.10.2017
+  - řeším otázku napájení modulu ESP8266
+- 20.10.2017
+  - klávesnice zabírá nevyhovujícíh 8 pinů - redukuji na jeden analogový pomocí resistorů
+- 21.10.2017
+  - piny klávesnice úspěšně zredukovány, řeším softwarovou část
+- 22.10.2017
+  - klávesnice úspěšně běží na jednom analogovém pinu místo původních 8 digitálních
+  - software jsem vyřešil napsáním jednoduché knihovny, kterou jsem implementoval do programu
   
+  - uvažuji o výměně Arduina za NodeMcu nebo podobný modul obsahujícím ESP8266 kvůli současným problémům s napájením a složitému             ovládání arduina přes ESP8266-01
