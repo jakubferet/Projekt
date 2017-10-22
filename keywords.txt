@@ -1,2 +1,0 @@
-AnalogKeypad	KEYWORD1
-analogKeypressed	KEYWORD2
