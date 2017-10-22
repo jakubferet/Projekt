@@ -1,12 +1,13 @@
 #include <Wire.h>
+#include <AnalogKeypad.h>
 #include <LiquidCrystal_I2C.h>
-#include <Keypad.h>
+//#include <Keypad.h>
 #define buzzer 4
-#define RedLED 5
+#define redLed 5
 #define trigPin 2
 #define echoPin 3
-#define COUNTDOWN 9
-#define WARNING 9
+#define COUNTDOWN 12
+#define WARNING 12
 long duration;
 int distance;
 int initialDistance; 
@@ -36,30 +37,34 @@ const long ledInterval = 50;
 unsigned long previousMillis = 0;
 unsigned long currentMillis;
 const long interval = 1000;
-const byte ROWS = 4;
-const byte COLS = 4;
 char keypressed;
-char keyMap[ROWS][COLS] = {
+//const byte ROWS = 4;
+//const byte COLS = 4;
+/*char keyMap[ROWS][COLS] = {
   {'1','2','3','A'},
   {'4','5','6','B'},
   {'7','8','9','C'},
   {'*','0','#','D'}
-};
-byte rowPins[ROWS] = {13, 12, 11, 10}; 
-byte colPins[COLS] = {9, 8, 7, 6};
-Keypad myKeypad = Keypad( makeKeymap(keyMap), rowPins, colPins, ROWS, COLS); 
+};*/
+//byte rowPins[ROWS] = {13, 12, 11, 10}; 
+//byte colPins[COLS] = {9, 8, 7, 6};
+
+//Keypad myKeypad = Keypad( makeKeymap(keyMap), rowPins, colPins, ROWS, COLS); 
+AnalogKeypad analogKeypad(A3);
 LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE); 
+
 void setup(){ 
   Serial.begin(9600);
   lcd.begin(16,2); 
   pinMode(buzzer, OUTPUT); 
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT); 
-  pinMode(RedLED, OUTPUT);
+  pinMode(redLed, OUTPUT);
 }
 
 void loop(){
-    keypressed = myKeypad.getKey();
+    keypressed = analogKeypad.analogKeypressed();
+    //keypressed = myKeypad.getKey();
     warningMessage = false;
     alarmMessage = false;
     cancelMessage = false; 
@@ -94,7 +99,7 @@ void loop(){
   Serial.print(" cm ");
   Serial.println();
   delay(100);*/
-  //Serial.print(keypressed);
+  //Serial.println(keypressed);
 }
 
 void activateAlarm(){
@@ -107,7 +112,7 @@ void activateAlarm(){
   countdown = COUNTDOWN;   
   while (countdown != 0-1){
     currentMillis = millis();
-    keypressed = myKeypad.getKey(); 
+    keypressed = analogKeypad.analogKeypressed(); 
     if(keypressed == 'C'){
       lcd.clear();
       lcd.setCursor(5,0);
@@ -126,6 +131,7 @@ void activateAlarm(){
       previousMillis = currentMillis;
       lcd.setCursor(12,0);
       lcd.print(countdown);
+      lcd.print(" ");
       tone(buzzer, 700, 100);
       countdown--;   
     } 
@@ -176,7 +182,7 @@ void alarmActivated(){
     text = 1;       
   }
   tone(buzzer, 1000);
-  digitalWrite(RedLED, HIGH);
+  digitalWrite(redLed, HIGH);
   activateMessage = false;
   warningMessage = false; 
   cancelMessage = false;
@@ -211,7 +217,7 @@ void ledBlink(){
     else{
       ledState = LOW;
     }
-    digitalWrite(RedLED, ledState);
+    digitalWrite(redLed, ledState);
   }    
 } 
 
@@ -224,7 +230,7 @@ void enterPassword(){
   lcd.print("Password:");
   while(activated){
     while(warning != 0-1 || countdown != 0-1){
-      keypressed = myKeypad.getKey();
+      keypressed = analogKeypad.analogKeypressed();
       if(deactivate == true){
         currentMillis = millis();       
         if (currentMillis - previousMillis >= interval){           
@@ -232,25 +238,30 @@ void enterPassword(){
           if(back == true){
             lcd.setCursor(12,0);
             lcd.print(countdown);
-            tone(buzzer, 700, 100);
+            lcd.print(" ");
+            tone(buzzer, 700, 100);       
             countdown--;  
           }
           else{
             ledBlink();
             lcd.setCursor(13,0);
             lcd.print(warning);
+            lcd.print(" ");
             tone(buzzer, 700, 100);
             warning--;  
           }   
         }
-      }
-      if (keypressed != NO_KEY){
+      }  
+      if (keypressed != 'N'){
         if (keypressed == '0' || keypressed == '1' || keypressed == '2' || keypressed == '3' ||
             keypressed == '4' || keypressed == '5' || keypressed == '6' || keypressed == '7' ||
             keypressed == '8' || keypressed == '9' ){
           tempPassword += keypressed;
           lcd.setCursor(k,1);
           lcd.print("*");
+          if(alarmMessage == false){
+            tone(buzzer, 500, 100);
+          }
           k++;
         }
       }
@@ -258,6 +269,7 @@ void enterPassword(){
         k=9;
         tempPassword = "";    
         lcd.clear();
+        tone(buzzer, 600, 100);
         if(activateMessage == true){
           lcd.setCursor(1,0);
           lcd.print("ACTIVATE ALARM");
@@ -288,7 +300,7 @@ void enterPassword(){
           }
           else{    
             noTone(buzzer);
-            digitalWrite(RedLED, LOW);    
+            digitalWrite(redLed, LOW);    
             lcd.clear();
             lcd.setCursor(2,0);
             lcd.print("DEACTIVATED");
