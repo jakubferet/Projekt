@@ -44,4 +44,4 @@ Cíl: bezpečnostní zařízení s využitím Arduino UNO a modulu ESP8266
   - klávesnice úspěšně běží na jednom analogovém pinu místo původních 8 digitálních
   - software jsem vyřešil napsáním jednoduché knihovny, kterou jsem implementoval do programu
   
-  - uvažuji o výměně Arduina za NodeMcu nebo podobný modul obsahujícím ESP8266 kvůli současným problémům s napájením a složitému             ovládání arduina přes ESP8266-01
+  - uvažuji o výměně Arduina za NodeMcu nebo podobný modul obsahujícím ESP8266 kvůli současným problémům s napájením a složitému             ovládání Arduina přes ESP8266-01
